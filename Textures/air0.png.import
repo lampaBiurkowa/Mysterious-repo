@@ -7,7 +7,10 @@ path="res://.import/air0.png-41373350b38203cddac9f275c3bf83cb.stex"
 [deps]
 
 source_file="res://Textures/air0.png"
+source_md5="7024b6c95106f6246a89888edf09bb14"
+
 dest_files=[ "res://.import/air0.png-41373350b38203cddac9f275c3bf83cb.stex" ]
+dest_md5="6e15edbbd2d5d1eebd6065f4e307e04e"
 
 [params]
 

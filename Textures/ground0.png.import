@@ -7,7 +7,10 @@ path="res://.import/ground0.png-ebb3e0987d17e407577f970d16980346.stex"
 [deps]
 
 source_file="res://Textures/ground0.png"
+source_md5="c295545e99f74c33649dcc6b3fe03c36"
+
 dest_files=[ "res://.import/ground0.png-ebb3e0987d17e407577f970d16980346.stex" ]
+dest_md5="f4e4f2043b8bd94d26fe001000e281a3"
 
 [params]
 

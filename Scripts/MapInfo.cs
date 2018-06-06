@@ -15,7 +15,7 @@ class MapInfo
 
     public int ChunkAmount
     {
-        set
+        private set
         {
             chunkAmount=value;
         }
@@ -26,7 +26,7 @@ class MapInfo
     }
     public int ChunkHeight
     {
-        set
+        private set
         {
             chunkHeight=value;
         }
@@ -37,7 +37,7 @@ class MapInfo
     }
     public string AudioPath
     {
-        set
+        private set
         {
             audioPath=value;
         }
@@ -48,7 +48,7 @@ class MapInfo
     }
     public string ThemePath
     {
-        set
+        private set
         {
             themePath=value;
         }
