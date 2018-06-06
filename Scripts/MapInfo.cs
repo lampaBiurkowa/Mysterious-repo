@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+
 class MapInfo
 {
     private int chunkAmount;
@@ -24,7 +25,8 @@ class MapInfo
             return chunkAmount;
         }
     }
-    public int ChunkHeight
+    
+	public int ChunkHeight
     {
         private set
         {
@@ -35,7 +37,8 @@ class MapInfo
             return chunkHeight;
         }
     }
-    public string AudioPath
+    
+	public string AudioPath
     {
         private set
         {
@@ -46,7 +49,8 @@ class MapInfo
             return audioPath;
         }
     }
-    public string ThemePath
+    
+	public string ThemePath
     {
         private set
         {
@@ -57,7 +61,8 @@ class MapInfo
             return themePath;
         }
     }
-    public List<List<string>> Blocks
+    
+	public List<List<string>> Blocks
     {
         get
         {
@@ -66,12 +71,14 @@ class MapInfo
     }
 
     public MapInfo(){}
-    public MapInfo(string pathToMapFolder)
+    
+	public MapInfo(string pathToMapFolder)
     {
         this.pathToMapFolder=pathToMapFolder;
         Load();
     }
-    private void Load()
+    
+	private void Load()
     {
         fileContent=loadFileContent("/map.map");
         loadChunkAmount();
@@ -81,7 +88,8 @@ class MapInfo
         for (int i = 0; i < chunkAmount; i++)
             loadBlocks(i+1);
     }
-    private List<string> loadFileContent(string pathSuffix)
+    
+	private List<string> loadFileContent(string pathSuffix)
     {
         string pathToMapHeaderFile = pathToMapFolder + pathSuffix;
         GD.Print(pathToMapHeaderFile);
@@ -89,28 +97,33 @@ class MapInfo
         List<string> result = new List<string>(lines);
         return result;
     }
-    private void loadChunkAmount()
+    
+	private void loadChunkAmount()
     {
         int headerLine = findHeaderType("chunkCount");
         GD.Print(headerLine);
         chunkAmount=Int32.Parse(loadHeaderData(headerLine));
     }
-    private void loadChunkHeight()
+    
+	private void loadChunkHeight()
     {
         int headerLine = findHeaderType("chunkHeight");
         chunkHeight=Int32.Parse(loadHeaderData(headerLine));
     }
-    private void loadAudioPath()
+    
+	private void loadAudioPath()
     {
         int headerLine = findHeaderType("audio");
         audioPath=loadHeaderData(headerLine);
     }
-    private void loadThemePath()
+    
+	private void loadThemePath()
     {
         int headerLine = findHeaderType("theme");
         themePath=loadHeaderData(headerLine);
     }
-    private int findHeaderType(string type)
+    
+	private int findHeaderType(string type)
     {
         for (int i = 0; i < fileContent.Count; i++)
             for (int j = 0; j < type.Length; j++)
@@ -122,7 +135,8 @@ class MapInfo
             }
         return -1; //error
     }
-    private string loadHeaderData(int lineNr)
+    
+	private string loadHeaderData(int lineNr)
     {
         if (lineNr >= fileContent.Count || lineNr < 0)
             return "ERROR: 001"; //param out of range
@@ -137,14 +151,16 @@ class MapInfo
         }
         return data;
     }
-    private void loadBlocks(int chunkNr)
+    
+	private void loadBlocks(int chunkNr)
     {
         List<string> chunkRaw=loadFileContent("/chunk"+chunkNr+".chn");
         layers.Add(chunkRaw.Count/chunkHeight);
         List<string> chunkFormatted=loadSingleBlocks(chunkRaw);
         blocks.Add(chunkFormatted);
     }
-    private List<string> loadSingleBlocks(List<string> source)
+    
+	private List<string> loadSingleBlocks(List<string> source)
     {
         List<string> result=new List<string>();
         for (int i = 0; i < source.Count; i++)
