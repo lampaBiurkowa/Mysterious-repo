@@ -1,24 +1,20 @@
 using Godot;
 using System;
-using System.Collections.Generic;
-abstract class Block
+
+abstract public class Block : StaticBody2D
 {
-    private Vector2 size;
-    private string code;
+    //private Sprite sprite; ?
+    //private Texture texture; ?
+    //private CollisionShape2D collision; ?
     private bool isCollidable;
 
-    public Vector2 Size
+    public override void _Ready()
     {
-        get
-        {
-            return size;
-        }
-    }
-
-    //?! ?!?!? ?!?!?!?!?!?!?!?!?!?!?!?!??!?!?!?!
-    public Block(string code)
-    {
-        this.code=code;
-        size=new Vector2(64f,64f);
+        //sprite = (Sprite)GetNode("Sprite"); ?
+        //sprite.Texture = texture; ?
+        //if(isCollidable) ?
+        //    collision.Disabled=true; ?
+        //else ?
+        //    collision.Disabled=false; ?
     }
 }
