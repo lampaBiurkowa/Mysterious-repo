@@ -1,7 +1,13 @@
 using Godot;
 using System;
+<<<<<<< HEAD:Scripts/Block.cs
 
 abstract public class Block : StaticBody2D
+=======
+using System.Collections.Generic;
+
+abstract class Block
+>>>>>>> no message:Scripts/Blocks/Block.cs
 {
     //private Sprite sprite; ?
     //private Texture texture; ?
