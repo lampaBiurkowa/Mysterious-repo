@@ -1,26 +1,15 @@
 using Godot;
 using System;
-<<<<<<< HEAD:Scripts/Block.cs
-
-abstract public class Block : StaticBody2D
-=======
 using System.Collections.Generic;
 
-abstract class Block
->>>>>>> no message:Scripts/Blocks/Block.cs
+abstract class Block:Sprite
 {
-    //private Sprite sprite; ?
-    //private Texture texture; ?
-    //private CollisionShape2D collision; ?
-    private bool isCollidable;
-
-    public override void _Ready()
+    protected int subId;
+    protected bool isCollidable = true;
+    public Block(int subId)
     {
-        //sprite = (Sprite)GetNode("Sprite"); ?
-        //sprite.Texture = texture; ?
-        //if(isCollidable) ?
-        //    collision.Disabled=true; ?
-        //else ?
-        //    collision.Disabled=false; ?
+        this.subId = subId;
     }
+
+    protected abstract void setTextureBasedOnSubId(); 
 }
