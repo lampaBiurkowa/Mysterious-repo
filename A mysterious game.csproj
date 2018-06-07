@@ -57,6 +57,7 @@
     <Compile Include="Scripts\Game.cs" />
     <Compile Include="Scripts\Chunk.cs" />
     <Compile Include="Scripts\Layer.cs" />
+    <Compile Include="Scripts\Map.cs" />
     <Compile Include="Scripts\MapInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

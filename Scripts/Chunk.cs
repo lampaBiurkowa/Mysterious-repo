@@ -1,5 +1,5 @@
 using System.Collections.Generic;
 struct Chunk
 {
-    public List<Layer> layers;
+    public List<Layer> Layers;
 }

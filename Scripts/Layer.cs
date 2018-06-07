@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 struct Layer
 {
-    public int xBlockCount;
-    public int yBlockCount;
-    public List<Block> blocks; 
+    public int XBlockAmount;
+    public int YBlockAmount;
+    public List<Block> Blocks; 
 }

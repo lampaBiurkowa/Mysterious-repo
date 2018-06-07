@@ -21,7 +21,6 @@ class BlockBuilder
         {
             case 0:
             b = new AirBlock(subId);
-            GD.Print("Air");
                 break;
             /*case 1:
             b;
@@ -30,7 +29,6 @@ class BlockBuilder
             b = new AirBlock(subId);
                 break;
         }
-        GD.Print(id," ",subId);
         return b;
     }
 

@@ -5,16 +5,17 @@ using System.IO;
 
 class MapInfo
 {
-    private int chunkAmount;
-    private int chunkHeight;
-    private string audioPath;
-    private string themePath;
-    private List<string> fileContent;
-    private List<List <string>> blocks=new List<List<string>>();
-    private List<int> layers=new List<int>();
+    private static int chunkAmount;
+    private static int chunkHeight;
+    private const int chunkWidth=16;
+    private static string audioPath;
+    private static string themePath;
+    private static List<string> fileContent;
+    private static List<List <string>> blocks=new List<List<string>>();
+    private static List<int> layers=new List<int>();
     private string pathToMapFolder;
 
-    public int ChunkAmount
+    public static int ChunkAmount
     {
         private set
         {
@@ -26,7 +27,7 @@ class MapInfo
         }
     }
     
-	public int ChunkHeight
+	public static int ChunkHeight
     {
         private set
         {
@@ -38,7 +39,15 @@ class MapInfo
         }
     }
     
-	public string AudioPath
+    public static int ChunkWidth
+    {
+        get
+        {
+            return chunkWidth;
+        }
+    }
+
+	public static string AudioPath
     {
         private set
         {
@@ -50,7 +59,7 @@ class MapInfo
         }
     }
     
-	public string ThemePath
+	public static string ThemePath
     {
         private set
         {
@@ -61,8 +70,16 @@ class MapInfo
             return themePath;
         }
     }
+
+	public static List<int> Layers
+    {
+        get
+        {
+            return layers;
+        }
+    }
     
-	public List<List<string>> Blocks
+	public static List<List<string>> Blocks
     {
         get
         {
@@ -92,7 +109,6 @@ class MapInfo
 	private List<string> loadFileContent(string pathSuffix)
     {
         string pathToMapHeaderFile = pathToMapFolder + pathSuffix;
-        GD.Print(pathToMapHeaderFile);
         var lines=System.IO.File.ReadLines(pathToMapHeaderFile);
         List<string> result = new List<string>(lines);
         return result;
@@ -101,7 +117,6 @@ class MapInfo
 	private void loadChunkAmount()
     {
         int headerLine = findHeaderType("chunkCount");
-        GD.Print(headerLine);
         chunkAmount=Int32.Parse(loadHeaderData(headerLine));
     }
     
@@ -168,9 +183,9 @@ class MapInfo
             string dataGetter="";
             for (int j = 0; j < source[i].Length; j++)
             {
-                if(source[i][j]!=' ')
+                if (source[i][j] != ' ')
                     dataGetter += source[i][j];
-                if(j%4==3)
+                if (j % 4 == 3 || j == source[i].Length - 1)
                 {
                     result.Add(dataGetter);
                     dataGetter="";
