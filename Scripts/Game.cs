@@ -7,12 +7,15 @@ public class Game : Container
     {
         MapInfo map=new MapInfo("Maps");
         
+        //tests
         GD.Print(map.AudioPath);
         GD.Print(map.ThemePath);
         GD.Print(map.ChunkAmount);
         GD.Print(map.ChunkHeight);
-        for (int i = 0; i < map.Blocks.Count; i++)
+        /*for (int i = 0; i < map.Blocks.Count; i++)
             for (int j = 0; j < map.Blocks[i].Count; j++)
-                GD.Print(map.Blocks[i][j]);
+                GD.Print(map.Blocks[i][j]);*/
+        BlockBuilder bb = new BlockBuilder();
+        bb.BuildBlock("0:2");
     }
 }

@@ -50,7 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Block.cs" />
+    <Compile Include="Scripts\Blocks\Block.cs" />
+    <Compile Include="Scripts\Blocks\BlockBuilder.cs" />
+    <Compile Include="Scripts\Blocks\AirBlock.cs" />
+    <Compile Include="Scripts\Blocks\DirtBlock.cs" />
     <Compile Include="Scripts\Game.cs" />
     <Compile Include="Scripts\MapInfo.cs" />
   </ItemGroup>

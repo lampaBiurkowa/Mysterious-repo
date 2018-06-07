@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Godot;
 
 class BlockBuilder
 {
@@ -21,11 +21,17 @@ class BlockBuilder
         {
             case 0:
             b = new AirBlock(subId);
+            GD.Print("Air");
                 break;
-            case 1:
-            b
+            /*case 1:
+            b;
+                break;*/
+            default:
+            b = new AirBlock(subId);
                 break;
         }
+        GD.Print(id," ",subId);
+        return b;
     }
 
     private void setIdFromCode(string code)

@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-abstract class Block:Sprite
+abstract class Block:StaticBody2D
 {
     protected int subId;
     protected bool isCollidable = true;
