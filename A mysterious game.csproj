@@ -55,6 +55,8 @@
     <Compile Include="Scripts\Blocks\AirBlock.cs" />
     <Compile Include="Scripts\Blocks\DirtBlock.cs" />
     <Compile Include="Scripts\Game.cs" />
+    <Compile Include="Scripts\Chunk.cs" />
+    <Compile Include="Scripts\Layer.cs" />
     <Compile Include="Scripts\MapInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
