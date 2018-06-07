@@ -6,6 +6,7 @@ public class Game : Container
     public override void _Ready()
     {
         MapInfo map=new MapInfo("Maps");
+        
         GD.Print(map.AudioPath);
         GD.Print(map.ThemePath);
         GD.Print(map.ChunkAmount);
