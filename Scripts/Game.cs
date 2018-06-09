@@ -28,13 +28,11 @@ class MapLoader
     private void createBlocks()
     {
         for (int i = 0; i < MapInfo.Blocks.Count; i++)
-        {
             for (int j = 0; j < MapInfo.Blocks[i].Count; j++)
             {
                 BlockBuilder blockBuilder = new BlockBuilder();
                 blocks.Add(blockBuilder.BuildBlock(MapInfo.Blocks[i][j]));
             }
-        }
     }
 
     private void createLayers()
@@ -49,7 +47,7 @@ class MapLoader
                 layer.YBlockAmount = MapInfo.ChunkHeight;
                 layer.Blocks = blockSublist;
                 layers.Add(layer);
-                blockSublist=new List<Block>();
+                blockSublist = new List<Block>();
             }
             blockSublist.Add(blocks[i]);
         }
@@ -62,9 +60,7 @@ class MapLoader
         {
             List<Layer> layerSublist = new List<Layer>();
             for (int j = 0; j < MapInfo.Layers[i]; j++)
-            {
                 layerSublist.Add(layers[counter]);
-            }
             Chunk chunk;
             chunk.Layers = layerSublist;
             chunks.Add(chunk);
@@ -80,7 +76,7 @@ class MapLoader
     }
 }
 
-class MapRenderer
+class MapPositioner
 {
     private const int BLOCK_WIDTH = 64;
     private const int BLOCK_HEIGHT = 64;
@@ -94,40 +90,36 @@ class MapRenderer
         }
     }
 
-    public MapRenderer()
+    public MapPositioner()
     {
-        MapLoader mapLoader=new MapLoader();
-        map=mapLoader.Map;
-        renderMap();
+        MapLoader mapLoader = new MapLoader();
+        map = mapLoader.Map;
+        locateMap();
     }
 
-    private void renderMap()
+    private void locateMap()
     {
         for (int i = 0; i < map.Chunks.Count; i++)
-        {
-            map.Chunks[i] = renderChunk(map.Chunks[i], i);
-        }
+            map.Chunks[i] = locateChunk(map.Chunks[i], i);
     }
 
-    private Chunk renderChunk(Chunk chunk, int nr)
+    private Chunk locateChunk(Chunk chunk, int nr)
     {
         for (int i = 0; i < chunk.Layers.Count; i++)
-        {
-            chunk.Layers[i] = renderLayer(chunk.Layers[i], nr);
-        }
+            chunk.Layers[i] = locateLayer(chunk.Layers[i], nr);
         return chunk;
     }
 
-    private Layer renderLayer(Layer layer, int nr)
+    private Layer locateLayer(Layer layer, int nr)
     {
-        float xPos=0;
-        float yPos=0;
+        float xPos = 0;
+        float yPos = 0;
         for (int i = 0; i < layer.Blocks.Count; i++)
         {
-            layer.Blocks[i] = renderBlock(layer.Blocks[i], new Vector2(xPos, yPos));
+            layer.Blocks[i] = locateBlock(layer.Blocks[i], new Vector2(xPos, yPos));
             layer.Blocks[i].Position = new Vector2(layer.Blocks[i].Position.x + nr * layer.XBlockAmount * BLOCK_WIDTH, layer.Blocks[i].Position.y);
             xPos++;
-            if(xPos % layer.XBlockAmount == 0)
+            if (xPos % layer.XBlockAmount == 0)
             {
                 xPos = 0;
                 yPos++;
@@ -136,7 +128,7 @@ class MapRenderer
         return layer;
     }
 
-    private Block renderBlock(Block block, Vector2 coors)
+    private Block locateBlock(Block block, Vector2 coors)
     {
         block.Position = new Vector2(coors.x * BLOCK_WIDTH, coors.y * BLOCK_HEIGHT);
         return block;
@@ -147,24 +139,28 @@ public class Game : Container
 {
     public override void _Ready()
     {
-        MapInfo map=new MapInfo("Maps");
-        renderMap(new MapRenderer());
+        MapInfo map = new MapInfo("Maps");
+        renderMap(new MapPositioner());
     }
-    private void renderMap(MapRenderer renderer)
+
+    private void renderMap(MapPositioner positioner)
     {
-        for (int i = 0; i < renderer.Map.Chunks.Count; i++)
-            renderChunks(renderer.Map.Chunks[i]);
+        for (int i = 0; i < positioner.Map.Chunks.Count; i++)
+            renderChunks(positioner.Map.Chunks[i]);
     }
+
     private void renderChunks(Chunk chunk)
     {
         for (int i = 0; i < chunk.Layers.Count; i++)
             renderLayers(chunk.Layers[i]);
     }
+
     private void renderLayers(Layer layer)
     {
         for (int i = 0; i < layer.Blocks.Count; i++)
             renderBlock(layer.Blocks[i]);
     }
+
     private void renderBlock(Block block)
     {
         Block instancedBlock = instanceBlock();
@@ -173,6 +169,7 @@ public class Game : Container
         Sprite instancedSprite = (Sprite)instancedBlock.GetNode("Sprite");
         instancedSprite.Texture = texture;
     }
+
     private Block instanceBlock()
     {
         PackedScene scene = (PackedScene)ResourceLoader.Load("Scenes/Block.tscn");

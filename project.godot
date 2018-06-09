@@ -13,3 +13,8 @@ config_version=3
 config/name="A mysterious game"
 run/main_scene="res://Scenes/Game.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080

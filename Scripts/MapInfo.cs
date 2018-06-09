@@ -7,7 +7,10 @@ class MapInfo
 {
     private static int chunkAmount;
     private static int chunkHeight;
-    private const int chunkWidth=16;
+    private const int chunkWidth = 16;
+    private const string HEADER_SUFFIX = "/map.map";
+    private const string CHUNK_SUFFIX = "/chunk";
+    private const string CHUNK_EXTENSION = ".chn";
     private static string audioPath;
     private static string themePath;
     private static List<string> fileContent;
@@ -19,7 +22,7 @@ class MapInfo
     {
         private set
         {
-            chunkAmount=value;
+            chunkAmount = value;
         }
         get
         {
@@ -31,7 +34,7 @@ class MapInfo
     {
         private set
         {
-            chunkHeight=value;
+            chunkHeight = value;
         }
         get
         {
@@ -51,7 +54,7 @@ class MapInfo
     {
         private set
         {
-            audioPath=value;
+            audioPath = value;
         }
         get
         {
@@ -63,7 +66,7 @@ class MapInfo
     {
         private set
         {
-            themePath=value;
+            themePath = value;
         }
         get
         {
@@ -91,13 +94,13 @@ class MapInfo
     
 	public MapInfo(string pathToMapFolder)
     {
-        this.pathToMapFolder=pathToMapFolder;
+        this.pathToMapFolder = pathToMapFolder;
         Load();
     }
     
 	private void Load()
     {
-        fileContent=loadFileContent("/map.map");
+        fileContent=loadFileContent(HEADER_SUFFIX);
         loadChunkAmount();
         loadChunkHeight();
         loadAudioPath();
@@ -109,7 +112,7 @@ class MapInfo
 	private List<string> loadFileContent(string pathSuffix)
     {
         string pathToMapHeaderFile = pathToMapFolder + pathSuffix;
-        var lines=System.IO.File.ReadLines(pathToMapHeaderFile);
+        var lines = System.IO.File.ReadLines(pathToMapHeaderFile);
         List<string> result = new List<string>(lines);
         return result;
     }
@@ -117,25 +120,25 @@ class MapInfo
 	private void loadChunkAmount()
     {
         int headerLine = findHeaderType("chunkCount");
-        chunkAmount=Int32.Parse(loadHeaderData(headerLine));
+        chunkAmount = Int32.Parse(loadHeaderData(headerLine));
     }
     
 	private void loadChunkHeight()
     {
         int headerLine = findHeaderType("chunkHeight");
-        chunkHeight=Int32.Parse(loadHeaderData(headerLine));
+        chunkHeight = Int32.Parse(loadHeaderData(headerLine));
     }
     
 	private void loadAudioPath()
     {
         int headerLine = findHeaderType("audio");
-        audioPath=loadHeaderData(headerLine);
+        audioPath = loadHeaderData(headerLine);
     }
     
 	private void loadThemePath()
     {
         int headerLine = findHeaderType("theme");
-        themePath=loadHeaderData(headerLine);
+        themePath = loadHeaderData(headerLine);
     }
     
 	private int findHeaderType(string type)
@@ -145,7 +148,7 @@ class MapInfo
             {
                 if (type[j] != fileContent[i][j])
                     break;
-                if(j==type.Length-1)
+                if (j == type.Length-1)
                     return i;
             }
         return -1; //error
@@ -155,13 +158,13 @@ class MapInfo
     {
         if (lineNr >= fileContent.Count || lineNr < 0)
             return "ERROR: 001"; //param out of range
-        string data="";
+        string data = "";
         bool colonEncountered = false;
         for (int i = 0; i < fileContent[lineNr].Length; i++)
         {
             if (colonEncountered)
                 data += fileContent[lineNr][i];
-            if ( fileContent[lineNr][i] == ':')
+            if (fileContent[lineNr][i] == ':')
                 colonEncountered = true;
         }
         return data;
@@ -169,15 +172,15 @@ class MapInfo
     
 	private void loadBlocks(int chunkNr)
     {
-        List<string> chunkRaw=loadFileContent("/chunk"+chunkNr+".chn");
-        layers.Add(chunkRaw.Count/chunkHeight);
-        List<string> chunkFormatted=loadSingleBlocks(chunkRaw);
+        List<string> chunkRaw = loadFileContent(CHUNK_SUFFIX + chunkNr + CHUNK_EXTENSION);
+        layers.Add(chunkRaw.Count / chunkHeight);
+        List<string> chunkFormatted = loadSingleBlocks(chunkRaw);
         blocks.Add(chunkFormatted);
     }
     
 	private List<string> loadSingleBlocks(List<string> source)
     {
-        List<string> result=new List<string>();
+        List<string> result = new List<string>();
         for (int i = 0; i < source.Count; i++)
         {
             string dataGetter="";
@@ -188,7 +191,7 @@ class MapInfo
                 if (j % 4 == 3 || j == source[i].Length - 1)
                 {
                     result.Add(dataGetter);
-                    dataGetter="";
+                    dataGetter = "";
                 }
             }
         }

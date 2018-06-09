@@ -1,6 +1,6 @@
 class AirBlock:Block
 {
-    public new void createBlock(int subId)
+    public AirBlock(int subId)
     {
         texturePath="Textures/air"+subId+".png";
     }

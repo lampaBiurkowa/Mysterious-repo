@@ -1,7 +1,8 @@
 class GroundBlock:Block
 {
-    public new void createBlock(int subId)
+    public GroundBlock(int subId)
     {
         texturePath="Textures/ground"+subId+".png";
+        isCollidable = true;
     }
 }

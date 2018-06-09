@@ -17,8 +17,6 @@ public class Block : StaticBody2D
             texturePath = value;
         }
     }
-    
-    public void createBlock(int subid){}
 
     public override void _Ready()
     {

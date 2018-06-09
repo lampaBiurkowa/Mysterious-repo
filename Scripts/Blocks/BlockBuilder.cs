@@ -20,18 +20,15 @@ class BlockBuilder
         switch (id)
         {
             case 0:
-            AirBlock airBlock = new AirBlock();
-            airBlock.createBlock(subId);
+            AirBlock airBlock = new AirBlock(subId);
             b.TexturePath = airBlock.TexturePath;
                 break;
             case 1:
-            GroundBlock groundBlock = new GroundBlock();
-            groundBlock.createBlock(subId);
+            GroundBlock groundBlock = new GroundBlock(subId);
             b.TexturePath = groundBlock.TexturePath;
                 break;
             default:
-            AirBlock derivedBlock = new AirBlock();
-            derivedBlock.createBlock(subId);
+            AirBlock derivedBlock = new AirBlock(subId);
             b.TexturePath = derivedBlock.TexturePath;
                 break;
         }
