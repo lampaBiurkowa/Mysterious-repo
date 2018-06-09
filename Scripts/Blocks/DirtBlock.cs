@@ -1,11 +1,15 @@
 class DirtBlock:Block
 {
-    public DirtBlock(int subId):base(subId)
+    public new void createBlock(int subId)/*:base(subId)*/
+    {
+        isCollidable = true;
+    }
+    /*public DirtBlock(int subId):base(subId)
     {
         isCollidable = true;
     }
     protected override void setTextureBasedOnSubId()
     {
 
-    }
+    }*/
 }

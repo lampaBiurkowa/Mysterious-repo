@@ -40,9 +40,6 @@ class MapLoader
     private void createLayers()
     {
         List<Block> blockSublist = new List<Block>();
-        GD.Print(blocks.Count);
-        GD.Print(MapInfo.Blocks.Count);
-        GD.Print(MapInfo.Blocks[0].Count);
         for (int i = 0; i < blocks.Count; i++)
         {
             if (i != 0 && i % (MapInfo.ChunkHeight * MapInfo.ChunkWidth)  == 0)
@@ -83,26 +80,104 @@ class MapLoader
     }
 }
 
+class MapRenderer
+{
+    private const int BLOCK_WIDTH = 64;
+    private const int BLOCK_HEIGHT = 64;
+    private Map map;
+
+    public Map Map
+    {
+        get
+        {
+            return map;
+        }
+    }
+
+    public MapRenderer()
+    {
+        MapLoader mapLoader=new MapLoader();
+        map=mapLoader.Map;
+        renderMap();
+    }
+
+    private void renderMap()
+    {
+        for (int i = 0; i < map.Chunks.Count; i++)
+        {
+            map.Chunks[i] = renderChunk(map.Chunks[i], i);
+        }
+    }
+
+    private Chunk renderChunk(Chunk chunk, int nr)
+    {
+        for (int i = 0; i < chunk.Layers.Count; i++)
+        {
+            chunk.Layers[i] = renderLayer(chunk.Layers[i], nr);
+        }
+        return chunk;
+    }
+
+    private Layer renderLayer(Layer layer, int nr)
+    {
+        float xPos=0;
+        float yPos=0;
+        for (int i = 0; i < layer.Blocks.Count; i++)
+        {
+            layer.Blocks[i] = renderBlock(layer.Blocks[i], new Vector2(xPos, yPos));
+            layer.Blocks[i].Position = new Vector2(layer.Blocks[i].Position.x + nr * layer.XBlockAmount * BLOCK_WIDTH, layer.Blocks[i].Position.y);
+            xPos++;
+            if(xPos % layer.XBlockAmount == 0)
+            {
+                xPos = 0;
+                yPos++;
+            }
+        }
+        return layer;
+    }
+
+    private Block renderBlock(Block block, Vector2 coors)
+    {
+        block.Position = new Vector2(coors.x * BLOCK_WIDTH, coors.y * BLOCK_HEIGHT);
+        return block;
+    }
+}
+
 public class Game : Container
 {
     public override void _Ready()
     {
         MapInfo map=new MapInfo("Maps");
-        MapLoader mapLoader=new MapLoader();
-        GD.Print("GOU!");
-        GD.Print(mapLoader.Map.Chunks.Count);
-        GD.Print(mapLoader.Map.Chunks[0].Layers.Count);
-        GD.Print(mapLoader.Map.Chunks[0].Layers[0].Blocks.Count);
-        GD.Print(mapLoader.Map.Chunks[0].Layers[0].Blocks.Count);
-        GD.Print(mapLoader.Map.Chunks[0].Layers[0].Blocks[0]);
-        GD.Print("DASD");
-        //tests
-        /*GD.Print(MapInfo.AudioPath);
-        GD.Print(MapInfo.ThemePath);
-        GD.Print(MapInfo.ChunkAmount);
-        GD.Print(MapInfo.ChunkHeight);*/
-        /*for (int i = 0; i < map.Blocks.Count; i++)
-            for (int j = 0; j < map.Blocks[i].Count; j++)
-                GD.Print(map.Blocks[i][j]);*/
+        renderMap(new MapRenderer());
+    }
+    private void renderMap(MapRenderer renderer)
+    {
+        for (int i = 0; i < renderer.Map.Chunks.Count; i++)
+            renderChunks(renderer.Map.Chunks[i]);
+    }
+    private void renderChunks(Chunk chunk)
+    {
+        for (int i = 0; i < chunk.Layers.Count; i++)
+            renderLayers(chunk.Layers[i]);
+    }
+    private void renderLayers(Layer layer)
+    {
+        for (int i = 0; i < layer.Blocks.Count; i++)
+            renderBlock(layer.Blocks[i]);
+    }
+    private void renderBlock(Block block)
+    {
+        Block instancedBlock = instanceBlock();
+        instancedBlock.Position =  block.Position;
+        Texture texture = (Texture)ResourceLoader.Load(block.TexturePath);
+        Sprite instancedSprite = (Sprite)instancedBlock.GetNode("Sprite");
+        instancedSprite.Texture = texture;
+    }
+    private Block instanceBlock()
+    {
+        PackedScene scene = (PackedScene)ResourceLoader.Load("Scenes/Block.tscn");
+        Block instancedBlock = (Block)scene.Instance();
+        AddChild(instancedBlock);
+        return instancedBlock;
     }
 }

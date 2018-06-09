@@ -12,7 +12,7 @@ class BlockBuilder
 
     public Block BuildBlock(string code)
     {
-        Block b;
+        Block b = new Block();
 
         setIdFromCode(code);
         setSubIdFromCode(code);
@@ -20,13 +20,19 @@ class BlockBuilder
         switch (id)
         {
             case 0:
-            b = new AirBlock(subId);
+            AirBlock airBlock = new AirBlock();
+            airBlock.createBlock(subId);
+            b.TexturePath = airBlock.TexturePath;
                 break;
-            /*case 1:
-            b;
-                break;*/
+            case 1:
+            GroundBlock groundBlock = new GroundBlock();
+            groundBlock.createBlock(subId);
+            b.TexturePath = groundBlock.TexturePath;
+                break;
             default:
-            b = new AirBlock(subId);
+            AirBlock derivedBlock = new AirBlock();
+            derivedBlock.createBlock(subId);
+            b.TexturePath = derivedBlock.TexturePath;
                 break;
         }
         return b;

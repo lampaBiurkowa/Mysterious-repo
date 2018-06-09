@@ -1,15 +1,27 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
-abstract class Block:StaticBody2D
+public class Block : StaticBody2D
 {
-    protected int subId;
-    protected bool isCollidable = true;
-    public Block(int subId)
+    protected bool isCollidable;
+    protected string texturePath;
+    
+    public string TexturePath
     {
-        this.subId = subId;
+        get
+        {
+            return texturePath;
+        }
+        set
+        {
+            texturePath = value;
+        }
     }
+    
+    public void createBlock(int subid){}
 
-    protected abstract void setTextureBasedOnSubId(); 
+    public override void _Ready()
+    {
+        
+    }
 }

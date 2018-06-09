@@ -1,11 +1,7 @@
 class AirBlock:Block
 {
-    public AirBlock(int subId):base(subId)
+    public new void createBlock(int subId)
     {
-
-    }
-    protected override void setTextureBasedOnSubId()
-    {
-
+        texturePath="Textures/air"+subId+".png";
     }
 }
