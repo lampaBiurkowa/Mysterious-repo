@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Coin.cs" />
     <Compile Include="Scripts\Game.cs" />
     <Compile Include="Scripts\MapInfo.cs" />
     <Compile Include="Scripts\Chunk.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="Scripts\Blocks\AirBlock.cs" />
     <Compile Include="Scripts\Blocks\GroundBlock.cs" />
     <Compile Include="Scripts\Blocks\DirtBlock.cs" />
+    <Compile Include="Scripts\Blocks\BridgeBlock.cs" />
+    <Compile Include="Scripts\Blocks\GrassBlock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

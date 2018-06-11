@@ -27,6 +27,18 @@ class BlockBuilder
             GroundBlock groundBlock = new GroundBlock(subId);
             b.TexturePath = groundBlock.TexturePath;
                 break;
+            case 2:
+            GrassBlock grassBlock = new GrassBlock(subId);
+            b.TexturePath = grassBlock.TexturePath;
+                break;
+            case 3:
+            BridgeBlock bridgeBlock = new BridgeBlock(subId);
+            b.TexturePath = bridgeBlock.TexturePath;
+                break;
+            case 4:
+            DirtBlock dirtBlock = new DirtBlock(subId);
+            b.TexturePath = dirtBlock.TexturePath;
+                break;
             default:
             AirBlock derivedBlock = new AirBlock(subId);
             b.TexturePath = derivedBlock.TexturePath;
