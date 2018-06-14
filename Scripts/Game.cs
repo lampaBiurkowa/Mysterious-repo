@@ -137,10 +137,18 @@ class MapPositioner
 
 public class Game : Container
 {
+    private Player player;
+
     public override void _Ready()
     {
         MapInfo map = new MapInfo("Maps");
         renderMap(new MapPositioner());
+        spwanPlayer();
+    }
+
+    public override void _Process(float delta)
+    {
+        player.Move();
     }
 
     private void renderMap(MapPositioner positioner)
@@ -165,6 +173,8 @@ public class Game : Container
     {
         Block instancedBlock = instanceBlock();
         instancedBlock.Position =  block.Position;
+        instancedBlock.IsCollidable = block.IsCollidable;
+        instancedBlock.handleCollidable();
         Texture texture = (Texture)ResourceLoader.Load(block.TexturePath);
         Sprite instancedSprite = (Sprite)instancedBlock.GetNode("Sprite");
         instancedSprite.Texture = texture;
@@ -176,5 +186,13 @@ public class Game : Container
         Block instancedBlock = (Block)scene.Instance();
         AddChild(instancedBlock);
         return instancedBlock;
+    }
+
+    private void spwanPlayer()
+    {
+        PackedScene scene = (PackedScene)ResourceLoader.Load("Scenes/Player.tscn");
+        player = (Player)scene.Instance();
+        AddChild(player);
+        player.SetPosition(new Vector2(30f,200f));
     }
 }
