@@ -55,6 +55,7 @@
     <Compile Include="Scripts\Chunk.cs" />
     <Compile Include="Scripts\Layer.cs" />
     <Compile Include="Scripts\Map.cs" />
+    <Compile Include="Scripts\Player.cs" />
     <Compile Include="Scripts\Blocks\Block.cs" />
     <Compile Include="Scripts\Blocks\BlockBuilder.cs" />
     <Compile Include="Scripts\Blocks\AirBlock.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="Scripts\Blocks\DirtBlock.cs" />
     <Compile Include="Scripts\Blocks\BridgeBlock.cs" />
     <Compile Include="Scripts\Blocks\GrassBlock.cs" />
-    <Compile Include="Scripts\Player.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

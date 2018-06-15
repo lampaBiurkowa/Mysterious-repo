@@ -40,6 +40,5 @@ public class Block : StaticBody2D
             collision.Disabled = false;
         else
             collision.Disabled = true;
-        GD.Print(isCollidable);
     }
 }

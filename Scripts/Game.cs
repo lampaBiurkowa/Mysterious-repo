@@ -149,6 +149,7 @@ public class Game : Container
     public override void _Process(float delta)
     {
         player.Move();
+        player.Fall();
     }
 
     private void renderMap(MapPositioner positioner)
