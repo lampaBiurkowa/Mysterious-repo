@@ -9,18 +9,21 @@ public class Player : KinematicBody2D
     const int JUMP_POWER = 30;
     bool jumping = false;
 
-    public void Jump()
+    public void HandleJump()
     {
-        jumping = true;
-        MoveAndCollide(new Vector2(0,-JUMP_POWER));
+        if (Input.IsActionJustPressed("jump"))
+        {
+            jumping = true;
+            MoveAndCollide(new Vector2(0,-JUMP_POWER));
+        }
     }
 
-    public void Move()
+    public void HandleMove()
     {
         MoveAndCollide(new Vector2(SPEED,0));
     }
 
-    public void Fall()
+    public void HandleFall()
     {
         if(!jumping)
             MoveAndCollide(new Vector2(0,FALL_SPEED));

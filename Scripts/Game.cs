@@ -138,6 +138,8 @@ class MapPositioner
 public class Game : Container
 {
     private Player player;
+    private const int SPAWN_X = 0;
+    private const int SPAWN_Y = 100;
 
     public override void _Ready()
     {
@@ -148,8 +150,9 @@ public class Game : Container
 
     public override void _Process(float delta)
     {
-        player.Move();
-        player.Fall();
+        player.HandleMove();
+        player.HandleJump();
+        player.HandleFall();
     }
 
     private void renderMap(MapPositioner positioner)
@@ -194,6 +197,6 @@ public class Game : Container
         PackedScene scene = (PackedScene)ResourceLoader.Load("Scenes/Player.tscn");
         player = (Player)scene.Instance();
         AddChild(player);
-        player.SetPosition(new Vector2(30f,200f));
+        player.SetPosition(new Vector2(SPAWN_X,SPAWN_Y));
     }
 }
