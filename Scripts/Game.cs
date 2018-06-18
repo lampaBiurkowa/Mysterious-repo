@@ -153,6 +153,7 @@ public class Game : Container
         player.HandleMove();
         player.HandleJump();
         player.HandleFall();
+        player.lost();
     }
 
     private void renderMap(MapPositioner positioner)
