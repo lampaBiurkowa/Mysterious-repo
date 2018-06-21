@@ -42,7 +42,14 @@ public class Player : KinematicBody2D
 
     public bool lost()
     {
-        return (isFallen()||isCrashed());
+        return isFallen(); //in case of crash event or sth...
+    }
+
+    public bool won(int finishX)
+    {
+        if (this.GetPosition().x >= finishX)
+            return true;
+        return false;
     }
 
     public override void _Ready()
@@ -60,10 +67,4 @@ public class Player : KinematicBody2D
             return true;
         return false;
     }
-
-    private bool isCrashed()
-    {
-        return false;
-    }
-
 }

@@ -40,8 +40,10 @@ class MapLoader
         List<Block> blockSublist = new List<Block>();
         for (int i = 0; i < blocks.Count; i++)
         {
-            if (i != 0 && i % (MapInfo.ChunkHeight * MapInfo.ChunkWidth)  == 0)
+            if ((i != 0 && i % (MapInfo.ChunkHeight * MapInfo.ChunkWidth)  == 0) || i == blocks.Count - 1)
             {
+                if (i == blocks.Count - 1) // grande GZD
+                    blockSublist.Add(blocks[i]);
                 Layer layer;
                 layer.XBlockAmount = MapInfo.ChunkWidth;
                 layer.YBlockAmount = MapInfo.ChunkHeight;
@@ -138,13 +140,18 @@ class MapPositioner
 public class Game : Container
 {
     private Player player;
-    private const int SPAWN_X = 0;
-    private const int SPAWN_Y = 100;
+    private const int DISPLAY_X = 1920;
+    private const int DISPLAY_Y = 1080;
+    private const int SPAWN_X = DISPLAY_X / 2;
+    private const int SPAWN_Y = DISPLAY_Y / 2;
+    private const int BLOCK_X = 64;
+    private int finish;
 
     public override void _Ready()
     {
         MapInfo map = new MapInfo("Maps");
         renderMap(new MapPositioner());
+        finish = MapInfo.ChunkAmount * MapInfo.ChunkWidth * BLOCK_X;
         spwanPlayer();
     }
 
@@ -153,7 +160,10 @@ public class Game : Container
         player.HandleMove();
         player.HandleJump();
         player.HandleFall();
-        player.lost();
+        if (player.lost())
+            GD.Print("You lost");
+        if (player.won(finish))
+            GD.Print("You won");
     }
 
     private void renderMap(MapPositioner positioner)
