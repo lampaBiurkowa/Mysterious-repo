@@ -11,11 +11,13 @@ class MapInfo
     private const string HEADER_SUFFIX = "/map.map";
     private const string CHUNK_SUFFIX = "/chunk";
     private const string CHUNK_EXTENSION = ".chn";
+    private const string STAR_SUFFIX = "/stars.str";
     private static string audioPath;
     private static string themePath;
     private static List<string> fileContent;
-    private static List<List <string>> blocks=new List<List<string>>();
-    private static List<int> layers=new List<int>();
+    private static List<List <string>> blocks = new List<List<string>>();
+    private static List<int> layers = new List<int>();
+    private static List<Vector2> stars = new List<Vector2>();
     private string pathToMapFolder;
 
     public static int ChunkAmount
@@ -90,6 +92,14 @@ class MapInfo
         }
     }
 
+	public static List<Vector2> Stars
+    {
+        get
+        {
+            return stars;
+        }
+    }
+
     public MapInfo(){}
     
 	public MapInfo(string pathToMapFolder)
@@ -107,6 +117,7 @@ class MapInfo
         loadThemePath();
         for (int i = 0; i < chunkAmount; i++)
             loadBlocks(i+1);
+        loadStars();
     }
     
 	private List<string> loadFileContent(string pathSuffix)
@@ -196,5 +207,37 @@ class MapInfo
             }
         }
         return result;
+    }
+
+    private void loadStars()
+    {
+        List<string> lines = loadFileContent(STAR_SUFFIX);
+        for (int i = 0; i < lines.Count; i++)
+            stars.Add(loadSingleStar(lines[i]));
+    }
+
+    private Vector2 loadSingleStar(string line)
+    {
+        Vector2 coors = new Vector2();
+        bool colonOccured = false;
+        string xAxis = "";
+        string yAxis = "";
+        for (int i = 0; i < line.Length; i++)
+        {
+            if (line[i] == ':')
+                colonOccured = true;
+            else
+            {
+                if (colonOccured)
+                    yAxis += line[i];
+                else
+                    xAxis += line[i];
+            }
+        }
+        int intXAxis = Int32.Parse(xAxis);
+        int intYAxis = Int32.Parse(yAxis);
+        coors.x = intXAxis;
+        coors.y = intYAxis;
+        return coors;
     }
 }

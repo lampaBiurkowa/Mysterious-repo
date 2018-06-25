@@ -63,6 +63,7 @@
     <Compile Include="Scripts\Blocks\DirtBlock.cs" />
     <Compile Include="Scripts\Blocks\BridgeBlock.cs" />
     <Compile Include="Scripts\Blocks\GrassBlock.cs" />
+    <Compile Include="Scripts\Star.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

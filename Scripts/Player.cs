@@ -5,8 +5,7 @@ public class Player : KinematicBody2D
 {
     private const int SPEED = 1;
     private const int FALL_SPEED = 2;
-    private const int EXTRA_SPEED = 10;
-    private const int JUMP_POWER = 10;
+    private const int JUMP_POWER = 50;
     private const int JUMP_DURATION = 10;
     private const int DISPLAY_Y = 1080;
     private bool jumping;
@@ -56,6 +55,24 @@ public class Player : KinematicBody2D
     {
         jumping = false;
         jumpCounter = 1;
+    }
+
+    public void handleLoose()
+    {
+        Sprite looseText = (Sprite)GetNode("lost");
+        looseText.Visible = true;
+    }
+
+    public void handleWin(int result)
+    {
+        Texture starTexture = (Texture)ResourceLoader.Load("res://Textures/star.png");
+        for (int i = 0; i < result; i++)
+        {
+            Sprite star = (Sprite)GetNode("star"+(i+1));
+            star.Visible = true;
+        }
+        Sprite winText = (Sprite)GetNode("won");
+        winText.Visible = true;
     }
 
     public override void _Process(float delta)

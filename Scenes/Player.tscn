@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
 [ext_resource path="res://Textures/player.png" type="Texture" id=2]
+[ext_resource path="res://Textures/win.png" type="Texture" id=3]
+[ext_resource path="res://Textures/lose.png" type="Texture" id=4]
+[ext_resource path="res://Textures/star.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -51,5 +54,37 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+
+[node name="won" type="Sprite" parent="." index="3"]
+
+visible = false
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="lose" type="Sprite" parent="." index="4"]
+
+visible = false
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="star1" type="Sprite" parent="." index="5"]
+
+visible = false
+position = Vector2( -400, 0 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="star2" type="Sprite" parent="." index="6"]
+
+visible = false
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="star3" type="Sprite" parent="." index="7"]
+
+visible = false
+position = Vector2( 400, 0 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform" ]
 
 

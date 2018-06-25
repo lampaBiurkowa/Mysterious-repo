@@ -143,27 +143,32 @@ public class Game : Container
     private const int DISPLAY_X = 1920;
     private const int DISPLAY_Y = 1080;
     private const int SPAWN_X = DISPLAY_X / 2;
-    private const int SPAWN_Y = DISPLAY_Y / 2;
+    private const int SPAWN_Y = DISPLAY_Y / 3;
     private const int BLOCK_X = 64;
+    private const int BLOCK_Y = 64;
+    private const int STAR_SIZE = 24;
+    private const int STARS_COUNT = 3;
     private int finish;
+    private int result;
+    private bool lost;
+    private bool won;
 
     public override void _Ready()
     {
         MapInfo map = new MapInfo("Maps");
         renderMap(new MapPositioner());
-        finish = MapInfo.ChunkAmount * MapInfo.ChunkWidth * BLOCK_X;
+        finish = MapInfo.ChunkAmount * MapInfo.ChunkWidth * BLOCK_X - (MapInfo.ChunkWidth * BLOCK_X) / 2 - BLOCK_X / 2; //(block is (not?) centered)
+        result = 0;
+        lost = false;
+        won = false;
         spwanPlayer();
+        spawnStars();
     }
 
     public override void _Process(float delta)
     {
-        player.HandleMove();
-        player.HandleJump();
-        player.HandleFall();
-        if (player.lost())
-            GD.Print("You lost");
-        if (player.won(finish))
-            GD.Print("You won");
+        if (!won && !lost)
+            controlGame();
     }
 
     private void renderMap(MapPositioner positioner)
@@ -207,7 +212,51 @@ public class Game : Container
     {
         PackedScene scene = (PackedScene)ResourceLoader.Load("Scenes/Player.tscn");
         player = (Player)scene.Instance();
+        player.AddToGroup("player");
         AddChild(player);
         player.SetPosition(new Vector2(SPAWN_X,SPAWN_Y));
+    }
+
+    private void spawnStars()
+    {
+        for (int i = 0; i < STARS_COUNT; i++)
+        {
+            Star star;
+            PackedScene scene = (PackedScene)ResourceLoader.Load("Scenes/Star.tscn");
+            star = (Star)scene.Instance();
+            AddChild(star);
+            star.SetPosition(new Vector2(MapInfo.Stars[i].x * BLOCK_X + (BLOCK_X / 2 - STAR_SIZE),MapInfo.Stars[i].y * BLOCK_Y + (BLOCK_Y / 2 - STAR_SIZE)));
+            star.AddToGroup("stars");
+        }
+    }
+
+    private void countResult()
+    {
+        for (int i = 0; i < GetTree().GetNodesInGroup("stars").Length; i++)
+        {
+            Star star = (Star)GetTree().GetNodesInGroup("stars")[i];
+            if (!star.Visible)
+                result++;
+        }
+    }
+
+    private void controlGame()
+    {
+        player.HandleMove();
+        player.HandleJump();
+        player.HandleFall();
+        if (player.lost())
+        {
+            lost = true;
+            Player player = (Player)GetTree().GetNodesInGroup("player")[0];
+            player.handleLoose();
+        }
+        if (player.won(finish))
+        {
+            countResult();
+            won = true;
+            Player player = (Player)GetTree().GetNodesInGroup("player")[0];
+            player.handleWin(result);
+        }
     }
 }
